@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XAU/USD Live Professional Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #1A1A1A; /* Dark, sophisticated background */
+            color: #f0f0f0; /* Light text for contrast */
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, p {
+            margin-bottom: 10px;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(45deg, #2E3A47, #1F2C3A); /* Dark blue gradient */
+            color: #f1f1f1;
+            box-shadow: 0 4px 50px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        header:hover {
+            background: linear-gradient(45deg, #243141, #1E2A36); /* Subtle darkening on hover */
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            width: 100%;
+            padding: 30px;
+            background: #2B2B2B; /* Dark gray */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chart-section:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
+        }
+
+        #tradingview_widget {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+        }
+
+        .timeframe-selector {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .timeframe-selector select {
+            background-color: #333;
+            color: #f0f0f0;
+            border: 1px solid #444;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .timeframe-selector select:focus {
+            outline: none;
+            border-color: #FFD700; /* Golden color when focused */
+        }
+
+        /* About Section */
+        .about-section {
+            background: #333;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .about-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #FFD700; /* Golden color */
+        }
+
+        .about-section p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #2B2B2B;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .contact-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #FFD700; /* Golden color */
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .contact-info a {
+            font-size: 18px;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Info Section */
+        .info-section {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .info-card {
+            width: 300px;
+            padding: 25px;
+            background: linear-gradient(135deg, #35424a, #2d3e3b); /* Subtle dark gradient */
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s ease;
+            color: #f1f1f1;
+        }
+
+        .info-card:hover {
+            background: linear-gradient(135deg, #f1b400, #e99400); /* Bright yellow accent on hover */
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .info-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD700; /* Golden color */
+        }
+
+        .info-card p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #e0e0e0;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #2B2B2B;
+            color: #999999;
+            font-size: 14px;
+            border-top: 2px solid #444;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .info-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-card {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+
+            .about-section p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>XAU/USD Live Dashboard</h1>
+        <p>Professional Insights and Real-Time Data</p>
+    </header>
+
+    <div class="container">
+        <!-- Chart Section -->
+        <div class="chart-section">
+            <h2>Live Gold Price Chart</h2>
+            <div id="tradingview_widget"></div>
+
+            <!-- Time Frame Selector -->
+            <div class="timeframe-selector">
+                <label for="timeframe" style="color: #FFD700; font-weight: 600;">Select Time Frame:</label>
+                <select id="timeframe">
+                    <option value="1" selected>1 Minute</option>
+                    <option value="5">5 Minutes</option>
+                    <option value="15">15 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                    <option value="60">1 Hour</option>
+                    <option value="240">4 Hours</option>
+                    <option value="D">1 Day</option>
+                    <option value="W">1 Week</option>
+                    <option value="M">1 Month</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-card">
+                <h3>Latest Market News</h3>
+                <p>Stay up to date with the latest trends in the gold market and beyond.</p>
+            </div>
+            <div class="info-card">
+                <h3>Gold Price Forecast</h3>
+                <p>Analyze future movements in the gold market with expert predictions.</p>
+            </div>
+            <div class="info-card">
+                <h3>Trading Strategies</h3>
+                <p>Discover effective strategies to trade gold and maximize your investment returns.</p>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="about-section">
+            <h2>About Me</h2>
+            <p>Hello, I'm Muhammad Waleed, a professional XAUUSD trader with years of experience in the forex market. I have a passion for finance and investing. Over time, I have developed a successful trading strategy that combines technical analysis and risk management. I believe in a disciplined approach to trading, focusing on long-term profitability rather than short-term gains. As an XAUUSD trader, I understand the importance of managing risk and preserving capital, which is why I prioritize risk management in my trading decisions. Through my XAUUSD trading webpage, I aim to share my insights, analysis, and strategies with fellow traders interested in this market. My goal is to provide valuable information and education to help traders make informed decisions and achieve their trading goals. Thank you for visiting!</p>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>Contact Information</h2>
+            <div class="contact-info">
+                <p>Email: <a href="mailto:waleededen33@gmail.com">waleededen33@gmail.com</a></p>
+                <p>Business Hours: 3PM to 9PM (Daily)</p>
+                <p>LinkedIn: <a href="https://pk.linkedin.com/in/muhammad-waleed-a85919247" target="_blank">Muhammad Waleed</a></p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Muhammad Waleed | XAUUSD Trading Dashboard</p>
+    </footer>
+
+    <!-- TradingView Widget Script -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        new TradingView.widget({
+            "autosize": true,
+            "symbol": "XAUUSD",
+            "interval": "1",  // Default time frame set to 1 Minute
+            "timezone": "Asia/Karachi",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#f1f1f1",
+            "enable_publishing": false,
+            "allow_symbol_change": true,
+            "container_id": "tradingview_widget"
+        });
+
+        // Change the time frame based on user selection
+        document.getElementById('timeframe').addEventListener('change', function() {
+            const interval = this.value;
+            window.tvWidget.chart().setInterval(interval); // Update chart's time frame
+        });
+    </script>
+
+</body>
+</html>
